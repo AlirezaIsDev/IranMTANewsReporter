@@ -1,0 +1,2978 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IranMTA | News Reporter</title>
+  <link rel="icon" type="image/png" href="https://forum.iranmta.ir/uploads/monthly_2019_05/nr_logo.png.6f537ee95e3f4f6de535157bf6f99865.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Vazirmatn", sans-serif;
+    }
+
+    :root {
+      font-size: 14px;
+    }
+
+    body {
+      height: 100vh;
+      width: 100vw;
+      background: #ed9680;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      color: #333;
+    }
+
+    .container {
+      width: 95vw;
+      height: 95vh;
+      max-width: 1200px;
+      max-height: 800px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding: 15px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(15px);
+      border-radius: 15px;
+      padding: 12px 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      min-height: 70px;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 50px;
+      height: 50px;
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .rank-badge {
+      padding: 6px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      color: white;
+      font-weight: bold;
+    }
+    .rank-badge.member {
+      background: linear-gradient(135deg, #6c757d, #adb5bd);
+    }
+    .rank-badge.assistant {
+      background: linear-gradient(135deg, #e91e63, #f48fb1);
+      box-shadow: 0 5px 15px rgba(233, 30, 99, 0.4);
+    }
+    .rank-badge.admin {
+      background: linear-gradient(135deg, #9c27b0, #ce93d8);
+      box-shadow: 0 5px 15px rgba(156, 39, 176, 0.4);
+    }
+    .rank-badge.owner {
+      background: linear-gradient(135deg, #ffd700, #ffed4e);
+      color: #333;
+      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 15px;
+      flex-grow: 1;
+      min-height: 0;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(15px);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .panel-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 15px;
+      text-align: center;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .rank-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    .rank-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.25);
+      padding: 12px;
+      border-radius: 12px;
+      color: white;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      min-height: 50px;
+    }
+
+    .rank-item:hover {
+      background: rgba(255, 255, 255, 0.35);
+      transform: translateX(-5px);
+    }
+
+    .rank-number {
+      background: linear-gradient(135deg, #ed9680, #f0b2a0);
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.8rem;
+      box-shadow: 0 3px 8px rgba(237, 150, 128, 0.4);
+    }
+
+    .player-name {
+      flex: 1;
+      text-align: right;
+      margin-right: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .player-weeks {
+      background: rgba(255, 255, 255, 0.35);
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      min-width: 70px;
+      text-align: center;
+    }
+   
+    .rank-item.active {
+      background: rgba(40, 167, 69, 0.35);
+      border: 1px solid rgba(40, 167, 69, 0.6);
+      box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    }
+    .rank-item.active .player-weeks {
+      background: rgba(40, 167, 69, 0.8);
+      color: white;
+    }
+   
+    .rank-item.operator {
+      background: rgba(33, 150, 243, 0.35);
+      border: 1px solid rgba(33, 150, 243, 0.6);
+      box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+    }
+    .rank-item.operator .player-weeks {
+      background: rgba(33, 150, 243, 0.8);
+      color: white;
+    }
+   
+    .rank-item.senior {
+      background: rgba(244, 67, 54, 0.35);
+      border: 1px solid rgba(244, 67, 54, 0.6);
+      box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+    }
+    .rank-item.senior .player-weeks {
+      background: rgba(244, 67, 54, 0.8);
+      color: white;
+    }
+    .rank-item.admin {
+      background: rgba(156, 39, 176, 0.35);
+      border: 1px solid rgba(156, 39, 176, 0.6);
+      box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+    }
+    .rank-item.admin .player-weeks {
+      background: rgba(156, 39, 176, 0.8);
+      color: white;
+    }
+    .rank-item.manager {
+      background: rgba(255, 152, 0, 0.35);
+      border: 1px solid rgba(255, 152, 0, 0.6);
+      box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+    }
+    .rank-item.manager .player-weeks {
+      background: rgba(255, 152, 0, 0.8);
+      color: white;
+    }
+    .rank-item.governor {
+      background: rgba(0, 150, 136, 0.35);
+      border: 1px solid rgba(0, 150, 136, 0.6);
+      box-shadow: 0 4px 15px rgba(0, 150, 136, 0.3);
+    }
+    .rank-item.governor .player-weeks {
+      background: rgba(0, 150, 136, 0.8);
+      color: white;
+    }
+    .rank-item.developer {
+      background: rgba(103, 58, 183, 0.35);
+      border: 1px solid rgba(103, 58, 183, 0.6);
+      box-shadow: 0 4px 15px rgba(103, 58, 183, 0.3);
+    }
+    .rank-item.developer .player-weeks {
+      background: rgba(103, 58, 183, 0.8);
+      color: white;
+    }
+    .rank-item.assistant {
+      background: rgba(233, 30, 99, 0.35);
+      border: 1px solid rgba(233, 30, 99, 0.6);
+      box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+    }
+    .rank-item.assistant .player-weeks {
+      background: rgba(233, 30, 99, 0.8);
+      color: white;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      font-size: 0.9rem;
+      color: #333;
+      outline: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      box-shadow: 0 4px 15px rgba(237, 150, 128, 0.3);
+    }
+
+    .login-btn {
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: #00c853;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 200, 83, 0.4);
+      margin-top: 8px;
+    }
+
+    .login-btn:hover {
+      background: #009624;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 150, 36, 0.5);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(15px);
+      border-radius: 15px;
+      padding: 12px 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      min-height: 60px;
+    }
+
+    .footer-info {
+      color: white;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .action-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #ed9680;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+      font-size: 0.85rem;
+    }
+
+    .action-btn:hover {
+      background: #ed9680;
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(237, 150, 128, 0.4);
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 25px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transform: scale(0.9);
+      transition: all 0.3s ease;
+    }
+
+    .modal.active .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-title {
+      color: #fff;
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      text-align: center;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: rotate(90deg);
+    }
+
+    .warning-box {
+      position: fixed;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 60, 60, 0.95);
+      color: #fff;
+      padding: 12px 25px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+      transition: top 0.6s ease;
+      z-index: 999;
+    }
+
+    .warning-box.show {
+      top: 20px;
+    }
+
+    .management-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .management-panel.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .management-content {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 25px;
+      width: 95%;
+      max-width: 1000px;
+      height: 85%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transform: scale(0.9);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .management-panel.active .management-content {
+      transform: scale(1);
+    }
+
+    .management-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .management-title {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .back-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #ed9680;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .back-btn:hover {
+      background: #ed9680;
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(237, 150, 128, 0.4);
+    }
+
+    .management-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .management-section {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 15px;
+      text-align: center;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 15px;
+    }
+
+    .form-label {
+      color: white;
+      font-weight: 600;
+      margin-bottom: 5px;
+      font-size: 0.9rem;
+    }
+
+    .submit-btn {
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: #00c853;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 200, 83, 0.4);
+      margin-top: 8px;
+    }
+
+    .submit-btn:hover {
+      background: #009624;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 150, 36, 0.5);
+    }
+
+    .user-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .user-panel.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .user-content {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 25px;
+      width: 95%;
+      max-width: 1000px;
+      height: 85%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transform: scale(0.9);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-panel.active .user-content {
+      transform: scale(1);
+    }
+
+    .user-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .user-title {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .user-back-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #ed9680;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .user-back-btn:hover {
+      background: #ed9680;
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(237, 150, 128, 0.4);
+    }
+
+    .user-body {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr;
+      grid-template-rows: auto 1fr auto;
+      gap: 15px;
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .user-info-panel {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name-display {
+      background: rgba(255, 255, 255, 0.35);
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .user-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .user-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .stat-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .stat-label {
+      font-weight: 600;
+    }
+
+    .stat-value {
+      background: rgba(255, 255, 255, 0.35);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    .owner-features {
+      margin-top: 15px;
+      padding-top: 12px;
+      border-top: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    .owner-feature {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 215, 0, 0.2);
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      color: #ffd700;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .chat-panel {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      text-align: center;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .chat-messages {
+      flex-grow: 1;
+      overflow-y: auto;
+      margin-bottom: 12px;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      max-height: 250px;
+    }
+
+    .message {
+      background: rgba(255, 255, 255, 0.3);
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .message.system {
+      background: rgba(33, 150, 243, 0.3);
+      text-align: center;
+      font-style: italic;
+    }
+    .message.owner {
+      background: rgba(255, 215, 0, 0.3);
+      border-left: 3px solid #ffd700;
+    }
+
+    .chat-input-container {
+      display: flex;
+      gap: 8px;
+    }
+
+    .chat-input {
+      flex-grow: 1;
+      padding: 10px 12px;
+      border: none;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      font-size: 0.9rem;
+      color: #333;
+      outline: none;
+    }
+
+    .chat-send-btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      background: #00c853;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .chat-send-btn:hover {
+      background: #009624;
+    }
+
+    .join-date-panel {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .join-date-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .join-date-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.35);
+      padding: 12px 20px;
+      border-radius: 12px;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .rank-panel {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .rank-display {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .rank-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .rank-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.35);
+      padding: 8px 16px;
+      border-radius: 10px;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    .rank-value.owner {
+      background: rgba(255, 215, 0, 0.4);
+      color: #ffd700;
+    }
+
+    .warning-panel {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .warning-display {
+      text-align: center;
+    }
+
+    .warning-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .warning-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.35);
+      padding: 8px 16px;
+      border-radius: 10px;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    .staffs-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .staffs-panel.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .staffs-content {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 25px;
+      width: 95%;
+      max-width: 700px;
+      height: 75%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transform: scale(0.9);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .staffs-panel.active .staffs-content {
+      transform: scale(1);
+    }
+
+    .staffs-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .staffs-title {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .staffs-back-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #ed9680;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .staffs-back-btn:hover {
+      background: #ed9680;
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(237, 150, 128, 0.4);
+    }
+
+    .staffs-body {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .news-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .news-panel.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .news-content {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 25px;
+      width: 95%;
+      max-width: 900px;
+      height: 75%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transform: scale(0.9);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .news-panel.active .news-content {
+      transform: scale(1);
+    }
+
+    .news-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .news-title {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .news-back-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #ed9680;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .news-back-btn:hover {
+      background: #ed9680;
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(237, 150, 128, 0.4);
+    }
+
+    .news-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 15px;
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .news-section {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .news-section:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .news-section-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      text-align: center;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .news-section-icon {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 12px;
+      color: #ed9680;
+    }
+
+    .news-section-desc {
+      color: rgba(255, 255, 255, 0.9);
+      text-align: center;
+      line-height: 1.6;
+      font-size: 0.9rem;
+    }
+
+    .news-details-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 3000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .news-details-panel.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .news-details-content {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 25px;
+      width: 95%;
+      max-width: 700px;
+      height: 75%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transform: scale(0.9);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .news-details-panel.active .news-details-content {
+      transform: scale(1);
+    }
+
+    .news-details-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .news-details-title {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .news-details-back-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #ed9680;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .news-details-back-btn:hover {
+      background: #ed9680;
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(237, 150, 128, 0.4);
+    }
+
+    .news-details-body {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .news-item {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 12px;
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .news-item:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .news-item-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #f0b2a0;
+    }
+
+    .news-item-date {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 8px;
+    }
+
+    .news-item-content {
+      line-height: 1.6;
+      font-size: 0.9rem;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: white;
+      font-weight: 500;
+      margin-top: 8px;
+      font-size: 0.9rem;
+    }
+   
+    .remember-me input {
+      width: 16px;
+      height: 16px;
+    }
+   
+    .logout-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 60, 60, 0.9);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 60, 60, 0.4);
+      font-size: 0.85rem;
+    }
+   
+    .logout-btn:hover {
+      background: rgba(220, 20, 20, 0.9);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(220, 20, 20, 0.5);
+    }
+
+    .topic-selection-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .topic-selection-panel.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .topic-selection-content {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 25px;
+      width: 95%;
+      max-width: 600px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transform: scale(0.9);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topic-selection-panel.active .topic-selection-content {
+      transform: scale(1);
+    }
+
+    .topic-selection-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .topic-selection-title {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .topic-selection-back-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #ed9680;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .topic-selection-back-btn:hover {
+      background: #ed9680;
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(237, 150, 128, 0.4);
+    }
+
+    .topic-selection-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .topic-section {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      min-height: 150px;
+    }
+
+    .topic-section:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .topic-section-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .topic-section-icon {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 12px;
+      color: #ed9680;
+    }
+
+    .time-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .time-panel.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .time-content {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 25px;
+      width: 95%;
+      max-width: 800px;
+      height: 75%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transform: scale(0.9);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .time-panel.active .time-content {
+      transform: scale(1);
+    }
+
+    .time-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .time-title {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .time-back-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #ed9680;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .time-back-btn:hover {
+      background: #ed9680;
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(237, 150, 128, 0.4);
+    }
+
+    .time-body {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .time-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .time-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.25);
+      padding: 12px;
+      border-radius: 12px;
+      color: white;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .time-item:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .time-player-name {
+      flex: 1;
+      text-align: right;
+      margin-right: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .time-action {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 10px;
+      background: #00c853;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.85rem;
+    }
+
+    .time-action:hover {
+      background: #009624;
+      transform: translateY(-2px);
+    }
+
+    .time-action.end {
+      background: #ff5722;
+    }
+
+    .time-action.end:hover {
+      background: #d84315;
+    }
+
+    .test-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .test-panel.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .test-content {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 25px;
+      width: 95%;
+      max-width: 600px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transform: scale(0.9);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .test-panel.active .test-content {
+      transform: scale(1);
+    }
+
+    .test-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .test-title {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .test-back-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #ed9680;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .test-back-btn:hover {
+      background: #ed9680;
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(237, 150, 128, 0.4);
+    }
+
+    .test-body {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .jabejayi-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .jabejayi-panel.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .jabejayi-content {
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 25px;
+      width: 95%;
+      max-width: 600px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transform: scale(0.9);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .jabejayi-panel.active .jabejayi-content {
+      transform: scale(1);
+    }
+
+    .jabejayi-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .jabejayi-title {
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .jabejayi-back-btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #ed9680;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .jabejayi-back-btn:hover {
+      background: #ed9680;
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(237, 150, 128, 0.4);
+    }
+
+    .jabejayi-body {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .rank-list::-webkit-scrollbar,
+    .chat-messages::-webkit-scrollbar,
+    .management-body::-webkit-scrollbar,
+    .user-body::-webkit-scrollbar,
+    .staffs-body::-webkit-scrollbar,
+    .news-body::-webkit-scrollbar,
+    .news-details-body::-webkit-scrollbar,
+    .time-body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .rank-list::-webkit-scrollbar-track,
+    .chat-messages::-webkit-scrollbar-track,
+    .management-body::-webkit-scrollbar-track,
+    .user-body::-webkit-scrollbar-track,
+    .staffs-body::-webkit-scrollbar-track,
+    .news-body::-webkit-scrollbar-track,
+    .news-details-body::-webkit-scrollbar-track,
+    .time-body::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+    }
+
+    .rank-list::-webkit-scrollbar-thumb,
+    .chat-messages::-webkit-scrollbar-thumb,
+    .management-body::-webkit-scrollbar-thumb,
+    .user-body::-webkit-scrollbar-thumb,
+    .staffs-body::-webkit-scrollbar-thumb,
+    .news-body::-webkit-scrollbar-thumb,
+    .news-details-body::-webkit-scrollbar-thumb,
+    .time-body::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 3px;
+    }
+
+    .rank-list::-webkit-scrollbar-thumb:hover,
+    .chat-messages::-webkit-scrollbar-thumb:hover,
+    .management-body::-webkit-scrollbar-thumb:hover,
+    .user-body::-webkit-scrollbar-thumb:hover,
+    .staffs-body::-webkit-scrollbar-thumb:hover,
+    .news-body::-webkit-scrollbar-thumb:hover,
+    .news-details-body::-webkit-scrollbar-thumb:hover,
+    .time-body::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    @media (max-width: 1024px) {
+      .container {
+        width: 98vw;
+        height: 98vh;
+      }
+      
+      .main-content {
+        grid-template-columns: 1fr 1fr;
+      }
+     
+      .management-body {
+        grid-template-columns: 1fr;
+      }
+     
+      .user-body {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+     
+      .news-body {
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      .topic-selection-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        font-size: 12px;
+      }
+      
+      .container {
+        width: 100vw;
+        height: 100vh;
+        padding: 10px;
+        gap: 10px;
+      }
+
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+
+      .header, .footer {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        padding: 10px 15px;
+      }
+
+      .action-buttons {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .panel {
+        padding: 15px;
+      }
+     
+      .management-body {
+        grid-template-columns: 1fr;
+      }
+     
+      .user-body {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+     
+      .news-body {
+        grid-template-columns: 1fr;
+      }
+      
+      .topic-selection-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      :root {
+        font-size: 11px;
+      }
+      
+      .logo {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .title {
+        font-size: 1.2rem;
+      }
+      
+      .action-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo-section">
+        <div class="logo">
+          <img src="https://forum.iranmta.ir/uploads/monthly_2019_05/nr_logo.png.6f537ee95e3f4f6de535157bf6f99865.png" alt="News Reporter Logo">
+        </div>
+        <h1 class="title">سیستم مدیریت News Reporter</h1>
+      </div>
+      <div class="user-info">
+        <div class="rank-badge member" id="headerRank">Rank: Member</div>
+        <div id="welcomeText">خوش آمدید</div>
+        <button class="logout-btn" id="logoutBtn" style="display: none;">خروج</button>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="panel">
+        <h2 class="panel-title">قدیمی ترین اعضای فکشن</h2>
+        <div class="rank-list">
+          <div class="rank-item">
+            <div class="rank-number">1</div>
+            <div class="player-name">Redmi</div>
+            <div class="player-weeks">16 هفته</div>
+          </div>
+          <div class="rank-item">
+            <div class="rank-number">2</div>
+            <div class="player-name">reza_reza</div>
+            <div class="player-weeks">6 هفته</div>
+          </div>
+          <div class="rank-item">
+            <div class="rank-number">3</div>
+            <div class="player-name">Mohammad039</div>
+            <div class="player-weeks">3 هفته</div>
+          </div>
+        </div>
+      </div>
+   
+      <div class="panel">
+        <h2 class="panel-title">فکشن اوپراتور های اخیر</h2>
+        <div class="rank-list">
+          <div class="rank-item">
+            <div class="rank-number">1</div>
+            <div class="player-name">None</div>
+            <div class="player-weeks">اپراتور</div>
+          </div>
+          <div class="rank-item">
+            <div class="rank-number">2</div>
+            <div class="player-name">None</div>
+            <div class="player-weeks">اپراتور</div>
+          </div>
+          <div class="rank-item">
+            <div class="rank-number">3</div>
+            <div class="player-name">None</div>
+            <div class="player-weeks">اپراتور</div>
+          </div>
+          <div class="rank-item">
+            <div class="rank-number">4</div>
+            <div class="player-name">Maslak</div>
+            <div class="player-weeks">اپراتور</div>
+          </div>
+        </div>
+      </div>
+   
+      <div class="panel">
+        <h2 class="panel-title">سابلیدرهای فعال فکشن</h2>
+        <div class="rank-list">
+          <div class="rank-item">
+            <div class="rank-number">1</div>
+            <div class="player-name">Redmi</div>
+            <div class="player-weeks">فعال</div>
+          </div>
+          <div class="rank-item">
+            <div class="rank-number">2</div>
+            <div class="player-name">(E)GO</div>
+            <div class="player-weeks">فعال</div>
+          </div>
+          <div class="rank-item">
+            <div class="rank-number">3</div>
+            <div class="player-name">Kayzen</div>
+            <div class="player-weeks">فعال</div>
+          </div>
+          <div class="rank-item">
+            <div class="rank-number">4</div>
+            <div class="player-name">PoCo</div>
+            <div class="player-weeks">فعال</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-info">
+        Made By News Reporter Management | IranMTA.ir
+      </div>
+      <div class="action-buttons">
+        <button class="action-btn" id="gkBtn">G-K</button>
+        <button class="action-btn" id="staffsBtn">Staff</button>
+        <button class="action-btn" id="newsBtn">News</button>
+        <button class="action-btn" id="managementBtn">Management</button>
+        <button class="action-btn" id="loginBtn">Login</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic-selection-panel" id="topicSelectionPanel">
+    <div class="topic-selection-content">
+      <div class="topic-selection-header">
+        <h2 class="topic-selection-title">انتخاب تاپیک</h2>
+        <button class="topic-selection-back-btn" id="topicSelectionBackBtn">بازگشت</button>
+      </div>
+      <div class="topic-selection-body">
+        <div class="topic-section" id="timeTopic">
+          <div class="topic-section-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <h3 class="topic-section-title">Time</h3>
+        </div>
+       
+        <div class="topic-section" id="gkTopic">
+          <div class="topic-section-icon">
+            <i class="fas fa-user-md"></i>
+          </div>
+          <h3 class="topic-section-title">G-K</h3>
+        </div>
+       
+        <div class="topic-section" id="jabejayiTopic">
+          <div class="topic-section-icon">
+            <i class="fas fa-exchange-alt"></i>
+          </div>
+          <h3 class="topic-section-title">Jabejayi</h3>
+        </div>
+       
+        <div class="topic-section" id="testTopic">
+          <div class="topic-section-icon">
+            <i class="fas fa-vial"></i>
+          </div>
+          <h3 class="topic-section-title">Test</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="time-panel" id="timePanel">
+    <div class="time-content">
+      <div class="time-header">
+        <h2 class="time-title">پنل Time</h2>
+        <button class="time-back-btn" id="timeBackBtn">بازگشت</button>
+      </div>
+      <div class="time-body">
+        <div class="time-list">
+          <div class="time-item">
+            <div class="time-player-name">Redmi</div>
+            <button class="time-action" id="timeBtn1">Start Time</button>
+          </div>
+          <div class="time-item">
+            <div class="time-player-name">Kayzen</div>
+            <button class="time-action" id="timeBtn2">Start Time</button>
+          </div>
+          <div class="time-item">
+            <div class="time-player-name">Isagi</div>
+            <button class="time-action" id="timeBtn3">Start Time</button>
+          </div>
+          <div class="time-item">
+            <div class="time-player-name">PoCo</div>
+            <button class="time-action" id="timeBtn4">Start Time</button>
+          </div>
+          <div class="time-item">
+            <div class="time-player-name">(E)GO</div>
+            <button class="time-action" id="timeBtn5">Start Time</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="test-panel" id="testPanel">
+    <div class="test-content">
+      <div class="test-header">
+        <h2 class="test-title">پنل Test</h2>
+        <button class="test-back-btn" id="testBackBtn">بازگشت</button>
+      </div>
+      <div class="test-body">
+        <div class="login-form">
+          <label class="form-label">نام فرد اکسپت شده در تست را وارد کنید:</label>
+          <input type="text" class="form-input" id="testPlayerName" placeholder="نام پلیر">
+          
+          <label class="form-label">لینک تست را وارد کنید:</label>
+          <input type="text" class="form-input" id="testLink" placeholder="لینک تست">
+          
+          <button class="login-btn" id="submitTest">ثبت اطلاعات تست</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="jabejayi-panel" id="jabejayiPanel">
+    <div class="jabejayi-content">
+      <div class="jabejayi-header">
+        <h2 class="jabejayi-title">پنل Jabejayi</h2>
+        <button class="jabejayi-back-btn" id="jabejayiBackBtn">بازگشت</button>
+      </div>
+      <div class="jabejayi-body">
+        <div class="login-form">
+          <label class="form-label">لطفا تایم مورد نظر خود را برای جابجایی وارد کنید:</label>
+          <input type="text" class="form-input" id="jabejayiTime" placeholder="مثال: 20:00 | 22:00">
+          
+          <button class="login-btn" id="submitJabejayi">ثبت تایم جابجایی</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="gkModal">
+    <div class="modal-content">
+      <button class="close-btn" id="closeGkModal">
+        <i class="fas fa-times"></i>
+      </button>
+      <h2 class="modal-title">جستجوی اطلاعات پلیر</h2>
+      <div class="login-form">
+        <input type="text" class="form-input" id="playerName" placeholder="اسم خودتان را وارد کنید (مثال: Dr_Alireza)">
+        <button class="login-btn" id="searchBtn">Search</button>
+      </div>
+      <div class="result-container" id="resultContainer" style="margin-top: 20px;"></div>
+    </div>
+  </div>
+
+  <div class="staffs-panel" id="staffsPanel">
+    <div class="staffs-content">
+      <div class="staffs-header">
+        <h2 class="staffs-title">تیم مدیریت News Reporter</h2>
+        <button class="staffs-back-btn" id="staffsBackBtn">بازگشت</button>
+      </div>
+      <div class="staffs-body">
+        <div class="rank-list">
+          <div class="rank-item admin">
+            <div class="rank-number">1</div>
+            <div class="player-name">MaXiMoV</div>
+            <div class="player-weeks">Administrator</div>
+          </div>
+          <div class="rank-item manager">
+            <div class="rank-number">2</div>
+            <div class="player-name">Alone</div>
+            <div class="player-weeks">Faction Manager</div>
+          </div>
+          <div class="rank-item governor">
+            <div class="rank-number">3</div>
+            <div class="player-name">POOYA_F</div>
+            <div class="player-weeks">Faction Governor</div>
+          </div>
+          <div class="rank-item admin">
+            <div class="rank-number">4</div>
+            <div class="player-name">The_Soap</div>
+            <div class="player-weeks">Faction Admin</div>
+          </div>
+          <div class="rank-item developer">
+            <div class="rank-number">5</div>
+            <div class="player-name">Rin</div>
+            <div class="player-weeks">Leader</div>
+          </div>
+          <div class="rank-item assistant">
+            <div class="rank-number">6</div>
+            <div class="player-name">Dr_Alireza</div>
+            <div class="player-weeks">Website Developer</div>
+          </div>
+          <div class="rank-item assistant">
+            <div class="rank-number">7</div>
+            <div class="player-name">SkyZero</div>
+            <div class="player-weeks">Assistant Developer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="news-panel" id="newsPanel">
+    <div class="news-content">
+      <div class="news-header">
+        <h2 class="news-title">اخبار و اطلاعیه‌ها</h2>
+        <button class="news-back-btn" id="newsBackBtn">بازگشت</button>
+      </div>
+      <div class="news-body">
+        <div class="news-section" id="meetingSection">
+          <div class="news-section-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3 class="news-section-title">میتینگ‌ها</h3>
+          <p class="news-section-desc">آخرین اخبار و اطلاعات مربوط به میتینگ‌های فکشن</p>
+        </div>
+       
+        <div class="news-section" id="salarySection">
+          <div class="news-section-icon">
+            <i class="fas fa-money-bill-wave"></i>
+          </div>
+          <h3 class="news-section-title">حقوق</h3>
+          <p class="news-section-desc">اطلاعات مربوط به حقوق و پرداخت‌های فکشن</p>
+        </div>
+       
+        <div class="news-section" id="membershipSection">
+          <div class="news-section-icon">
+            <i class="fas fa-user-plus"></i>
+          </div>
+          <h3 class="news-section-title">عضویت</h3>
+          <p class="news-section-desc">اخبار مربوط به عضویت و شرایط جدید فکشن</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="news-details-panel" id="newsDetailsPanel">
+    <div class="news-details-content">
+      <div class="news-details-header">
+        <h2 class="news-details-title" id="newsDetailsTitle">جزئیات اخبار</h2>
+        <button class="news-details-back-btn" id="newsDetailsBackBtn">بازگشت</button>
+      </div>
+      <div class="news-details-body" id="newsDetailsBody">
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="managementModal">
+    <div class="modal-content">
+      <button class="close-btn" id="closeManagementModal">
+        <i class="fas fa-times"></i>
+      </button>
+      <h2 class="modal-title">ورود به پنل مدیریت</h2>
+      <div class="login-form">
+        <input type="text" class="form-input" id="tokenInput" placeholder="توکن خود را وارد کنید">
+        <button class="login-btn" id="submitToken">تایید توکن</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <button class="close-btn" id="closeLoginModal">
+        <i class="fas fa-times"></i>
+      </button>
+      <h2 class="modal-title">ورود به سیستم</h2>
+      <div class="login-form">
+        <input type="text" class="form-input" id="username" placeholder="نام کاربری">
+        <input type="password" class="form-input" id="password" placeholder="رمز عبور">
+        <div class="remember-me">
+          <input type="checkbox" id="rememberMe">
+          <label for="rememberMe">مرا به خاطر بسپار</label>
+        </div>
+        <button class="login-btn" id="submitLogin">ورود</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="management-panel" id="managementPanel">
+    <div class="management-content">
+      <div class="management-header">
+        <h2 class="management-title">پنل مدیریت News Reporter</h2>
+        <button class="back-btn" id="backBtn">بازگشت</button>
+      </div>
+      <div class="management-body">
+        <div class="management-section">
+          <h3 class="section-title">ثبت حقوق پلیر</h3>
+          <div class="form-group">
+            <label class="form-label" for="playerNameInput">نام پلیر:</label>
+            <input type="text" class="form-input" id="playerNameInput" placeholder="نام پلیر را وارد کنید">
+           
+            <label class="form-label" for="playerSalary">حقوق پلیر:</label>
+            <input type="text" class="form-input" id="playerSalary" placeholder="مبلغ حقوق را وارد کنید">
+           
+            <label class="form-label" for="screenshotsCount">تعداد اسکرین‌شات:</label>
+            <input type="number" class="form-input" id="screenshotsCount" placeholder="تعداد اسکرین‌شات">
+           
+            <label class="form-label" for="rejectedScreenshots">اسکرین‌شات رد شده:</label>
+            <input type="number" class="form-input" id="rejectedScreenshots" placeholder="تعداد اسکرین‌شات رد شده">
+           
+            <button class="submit-btn" id="submitSalary">ثبت حقوق</button>
+          </div>
+        </div>
+       
+        <div class="management-section">
+          <h3 class="section-title">ثبت اخطار</h3>
+          <div class="form-group">
+            <label class="form-label" for="warningPlayerName">نام پلیر:</label>
+            <input type="text" class="form-input" id="warningPlayerName" placeholder="نام پلیر را وارد کنید">
+           
+            <label class="form-label" for="warningReason">دلیل اخطار:</label>
+            <input type="text" class="form-input" id="warningReason" placeholder="دلیل اخطار را وارد کنید">
+           
+            <label class="form-label" for="warningCount">تعداد:</label>
+            <input type="number" class="form-input" id="warningCount" placeholder="تعداد اخطار">
+           
+            <label class="form-label" for="warningDate">تاریخ:</label>
+            <input type="date" class="form-input" id="warningDate">
+           
+            <button class="submit-btn" id="submitWarning">ثبت اخطار</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="user-panel" id="userPanel">
+    <div class="user-content">
+      <div class="user-header">
+        <h2 class="user-title" id="userPanelTitle">پنل کاربری News Reporter</h2>
+        <button class="user-back-btn" id="userBackBtn">بازگشت</button>
+      </div>
+      <div class="user-body">
+        <div class="user-info-panel">
+          <div class="user-name-display">
+            <div class="user-name" id="displayedUsername">The_Soap</div>
+          </div>
+          <div class="user-stats">
+            <div class="stat-item">
+              <span class="stat-label">افدبل های شما:</span>
+              <span class="stat-value" id="userWarnings">0/3</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">تعداد هفته شما:</span>
+              <span class="stat-value" id="userWeeks">1</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">تعداد میتینگ شما:</span>
+              <span class="stat-value" id="userMeetings">1</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">رنک شما:</span>
+              <span class="stat-value" id="userRank">1</span>
+            </div>
+          </div>
+          <div class="owner-features" id="ownerFeatures" style="display: none;">
+            <div class="owner-feature">
+              <i class="fas fa-crown"></i>
+              <span>دسترسی کامل به سیستم</span>
+            </div>
+            <div class="owner-feature">
+              <i class="fas fa-shield-alt"></i>
+              <span>مدیریت کاربران</span>
+            </div>
+            <div class="owner-feature">
+              <i class="fas fa-cog"></i>
+              <span>تنظیمات پیشرفته</span>
+            </div>
+          </div>
+        </div>
+       
+        <div class="chat-panel">
+          <h3 class="chat-title">ارتباط با تیم مدیریتی</h3>
+          <div class="chat-messages" id="chatMessages">
+            <div class="message system">سیستم: به پنل کاربری خوش آمدید. می‌توانید از این قسمت با مدیریت در ارتباط باشید.</div>
+            <div class="message system">سیستم: لطفاً پیام خود را در کادر زیر تایپ کرده و ارسال کنید.</div>
+          </div>
+          <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="پیام خود را اینجا تایپ کنید...">
+            <button class="chat-send-btn" id="chatSendBtn">ارسال</button>
+          </div>
+        </div>
+       
+        <div class="join-date-panel">
+          <div class="join-date-title">تاریخ عضویت</div>
+          <div class="join-date-value">2025/10/29 - 1404/08/07</div>
+        </div>
+       
+        <div class="rank-panel">
+          <div class="rank-display">
+            <div class="rank-title">رنک شما</div>
+            <div class="rank-value" id="userRankDisplay">Member ( R-1 )</div>
+          </div>
+        </div>
+       
+        <div class="warning-panel">
+          <div class="warning-display">
+            <div class="warning-title">اخطار شما</div>
+            <div class="warning-value">0/2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="warning" class="warning-box">
+    <i class="fas fa-exclamation-triangle warning-icon"></i>
+    <span>Shoma Dastresi Lazem Ra Nadarid!</span>
+  </div>
+
+  <script>
+    const topicSelectionPanel = document.getElementById('topicSelectionPanel');
+    const topicSelectionBackBtn = document.getElementById('topicSelectionBackBtn');
+    const timeTopic = document.getElementById('timeTopic');
+    const gkTopic = document.getElementById('gkTopic');
+    const jabejayiTopic = document.getElementById('jabejayiTopic');
+    const testTopic = document.getElementById('testTopic');
+    
+    const timePanel = document.getElementById('timePanel');
+    const timeBackBtn = document.getElementById('timeBackBtn');
+    const timeBtn1 = document.getElementById('timeBtn1');
+    const timeBtn2 = document.getElementById('timeBtn2');
+    const timeBtn3 = document.getElementById('timeBtn3');
+    const timeBtn4 = document.getElementById('timeBtn4');
+    const timeBtn5 = document.getElementById('timeBtn5');
+    
+    const testPanel = document.getElementById('testPanel');
+    const testBackBtn = document.getElementById('testBackBtn');
+    const submitTest = document.getElementById('submitTest');
+    const testPlayerName = document.getElementById('testPlayerName');
+    const testLink = document.getElementById('testLink');
+    
+    const jabejayiPanel = document.getElementById('jabejayiPanel');
+    const jabejayiBackBtn = document.getElementById('jabejayiBackBtn');
+    const submitJabejayi = document.getElementById('submitJabejayi');
+    const jabejayiTime = document.getElementById('jabejayiTime');
+
+    const gkBtn = document.getElementById('gkBtn');
+    const staffsBtn = document.getElementById('staffsBtn');
+    const newsBtn = document.getElementById('newsBtn');
+    const managementBtn = document.getElementById('managementBtn');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const gkModal = document.getElementById('gkModal');
+    const staffsPanel = document.getElementById('staffsPanel');
+    const newsPanel = document.getElementById('newsPanel');
+    const managementModal = document.getElementById('managementModal');
+    const loginModal = document.getElementById('loginModal');
+    const managementPanel = document.getElementById('managementPanel');
+    const userPanel = document.getElementById('userPanel');
+    const newsDetailsPanel = document.getElementById('newsDetailsPanel');
+    const closeGkModal = document.getElementById('closeGkModal');
+    const staffsBackBtn = document.getElementById('staffsBackBtn');
+    const newsBackBtn = document.getElementById('newsBackBtn');
+    const closeManagementModal = document.getElementById('closeManagementModal');
+    const closeLoginModal = document.getElementById('closeLoginModal');
+    const backBtn = document.getElementById('backBtn');
+    const userBackBtn = document.getElementById('userBackBtn');
+    const newsDetailsBackBtn = document.getElementById('newsDetailsBackBtn');
+    const searchBtn = document.getElementById('searchBtn');
+    const submitToken = document.getElementById('submitToken');
+    const submitLogin = document.getElementById('submitLogin');
+    const submitSalary = document.getElementById('submitSalary');
+    const submitWarning = document.getElementById('submitWarning');
+    const chatSendBtn = document.getElementById('chatSendBtn');
+    const rememberMe = document.getElementById('rememberMe');
+    const playerNameInput = document.getElementById('playerName');
+    const tokenInput = document.getElementById('tokenInput');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const chatInput = document.getElementById('chatInput');
+    const resultContainer = document.getElementById('resultContainer');
+    const chatMessages = document.getElementById('chatMessages');
+    const warn = document.getElementById('warning');
+    const meetingSection = document.getElementById('meetingSection');
+    const salarySection = document.getElementById('salarySection');
+    const membershipSection = document.getElementById('membershipSection');
+    const newsDetailsTitle = document.getElementById('newsDetailsTitle');
+    const newsDetailsBody = document.getElementById('newsDetailsBody');
+    const headerRank = document.getElementById('headerRank');
+    const welcomeText = document.getElementById('welcomeText');
+    const userPanelTitle = document.getElementById('userPanelTitle');
+    const displayedUsername = document.getElementById('displayedUsername');
+    const userWarnings = document.getElementById('userWarnings');
+    const userWeeks = document.getElementById('userWeeks');
+    const userMeetings = document.getElementById('userMeetings');
+    const userRank = document.getElementById('userRank');
+    const userRankDisplay = document.getElementById('userRankDisplay');
+    const ownerFeatures = document.getElementById('ownerFeatures');
+    const users = {
+        'The_Soap': {
+            password: 'The_Soap2020',
+            rank: 'Faction Admin',
+            rankClass: 'admin',
+            displayRank: 'Faction Admin',
+            warnings: '0/3',
+            weeks: '1',
+            meetings: '1',
+            userRank: '1',
+            isOwner: false
+        },
+        'SkyZero': {
+            password: 'SkyZero2020',
+            rank: 'Assistant Developer',
+            rankClass: 'assistant',
+            displayRank: 'Assistant Developer',
+            warnings: '0/0',
+            weeks: '52',
+            meetings: '48',
+            userRank: '1',
+            isOwner: false
+        }
+    };
+    const newsData = {
+      meeting: [
+        {
+          title: "جلسه هفتگی اقلیت",
+          date: "1404/08/08",
+          content: "میتینگ هفتگی فکشن News Reporter روز پنجشنبه ساعت 15:00 در تیم اسپیک اختصاصی سرور [ BiaTs.ir ] برگزار خواهد شد. حضور تمام اعضا الزامی است."
+        },
+        {
+          title: "جلسه هفتگی اقلیت",
+          date: "1404/08/01",
+          content: "میتینگ هفتگی فکشن News Reporter روز پنجشنبه ساعت 14:00 در تیم اسپیک اختصاصی سرور [ BiaTs.ir ] برگزار خواهد شد. حضور تمام اعضا الزامی است."
+        },
+        {
+          title: "جلسه هفتگی اقلیت",
+          date: "1404/07/25",
+          content: "میتینگ هفتگی فکشن News Reporter روز پنجشنبه ساعت 19:00 در تیم اسپیک اختصاصی سرور [ BiaTs.ir ] برگزار خواهد شد. حضور تمام اعضا الزامی است."
+        }
+      ],
+      salary: [
+        {
+          title: "پرداخت حقوق هفتگی",
+          date: "1404/08/05",
+          content: "حقوق تمامی اعضای فکشن واریز شد! برای دریافت حقوق به بانک مراجعه کنید."
+        },
+        {
+          title: "پرداخت حقوق هفتگی",
+          date: "1404/07/25",
+          content: "حقوق تمامی اعضای فکشن واریز شد! برای دریافت حقوق به بانک مراجعه کنید."
+        },
+        {
+          title: "پرداخت حقوق هفتگی",
+          date: "1404/07/19",
+          content: "حقوق تمامی اعضای فکشن واریز شد! برای دریافت حقوق به بانک مراجعه کنید."
+        }
+      ],
+      membership: [
+        {
+          title: "عضویت اعضای جدید",
+          date: "1404/08/08",
+          content: "فکشن News Reporter عضو فعال با لول [ +5 ] میپذیرد. برای عضویت در فروم ایران ام تی ای اقدام به پستگذاری کنید."
+        },
+        {
+          title: "شرایط جدید عضویت",
+          date: "1404/08/07",
+          content: "فکشن News Reporter عضو فعال با لول [ +5 ] میپذیرد. برای عضویت در فروم ایران ام تی ای اقدام به پستگذاری کنید."
+        },
+        {
+          title: "برگزاری آزمون عضویت",
+          date: "1404/08/06",
+          content: "فکشن News Reporter عضو فعال با لول [ +5 ] میپذیرد. برای عضویت در فروم ایران ام تی ای اقدام به پستگذاری کنید."
+        }
+      ]
+    };
+    let currentUser = null;
+    
+    const timeButtons = [timeBtn1, timeBtn2, timeBtn3, timeBtn4, timeBtn5];
+    const timeStates = [false, false, false, false, false];
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      checkLoginStatus();
+     
+      const allItems = document.querySelectorAll('.rank-item .player-weeks');
+      allItems.forEach(item => {
+        const text = item.textContent.trim();
+        const parent = item.parentElement;
+        if (text === 'فعال') {
+          parent.classList.add('active');
+        } else if (text === 'اپراتور') {
+          parent.classList.add('operator');
+        } else if (text.includes('هفته')) {
+          parent.classList.add('senior');
+        }
+      });
+    });
+    
+    function checkLoginStatus() {
+      const savedUser = localStorage.getItem('newsReporterLoggedInUser');
+      if (savedUser) {
+        const userData = JSON.parse(savedUser);
+        loginUser(userData.username, false);
+      }
+    }
+    
+    function loginUser(user, showMessage = true) {
+      const userData = users[user];
+      currentUser = user;
+     
+      displayedUsername.textContent = user;
+      userWarnings.textContent = userData.warnings;
+      userWeeks.textContent = userData.weeks;
+      userMeetings.textContent = userData.meetings;
+      userRank.textContent = userData.userRank;
+      userRankDisplay.textContent = userData.displayRank;
+     
+      headerRank.textContent = `Rank: ${userData.rank}`;
+      headerRank.className = `rank-badge ${userData.rankClass}`;
+      welcomeText.textContent = `خوش آمدید ${user}`;
+     
+      logoutBtn.style.display = 'block';
+     
+      if (userData.isOwner) {
+        userPanelTitle.textContent = 'پنل مدیریت Owner';
+        userRankDisplay.classList.add('owner');
+        ownerFeatures.style.display = 'block';
+      } else {
+        userPanelTitle.textContent = 'پنل کاربری News Reporter';
+        userRankDisplay.className = 'rank-value';
+        ownerFeatures.style.display = 'none';
+      }
+     
+      loginModal.classList.remove('active');
+      usernameInput.value = '';
+      passwordInput.value = '';
+     
+      if (showMessage) {
+        showWarning(`ورود ${user} موفقیت آمیز بود!`, 'success');
+      }
+    }
+    
+    timeTopic.addEventListener('click', () => {
+      topicSelectionPanel.classList.remove('active');
+      timePanel.classList.add('active');
+    });
+    
+    gkTopic.addEventListener('click', () => {
+      topicSelectionPanel.classList.remove('active');
+      managementPanel.classList.add('active');
+    });
+    
+    jabejayiTopic.addEventListener('click', () => {
+      topicSelectionPanel.classList.remove('active');
+      jabejayiPanel.classList.add('active');
+    });
+    
+    testTopic.addEventListener('click', () => {
+      topicSelectionPanel.classList.remove('active');
+      testPanel.classList.add('active');
+    });
+    
+    topicSelectionBackBtn.addEventListener('click', () => {
+      topicSelectionPanel.classList.remove('active');
+      managementModal.classList.add('active');
+    });
+    
+    timeBackBtn.addEventListener('click', () => {
+      timePanel.classList.remove('active');
+      topicSelectionPanel.classList.add('active');
+    });
+    
+    testBackBtn.addEventListener('click', () => {
+      testPanel.classList.remove('active');
+      topicSelectionPanel.classList.add('active');
+    });
+    
+    jabejayiBackBtn.addEventListener('click', () => {
+      jabejayiPanel.classList.remove('active');
+      topicSelectionPanel.classList.add('active');
+    });
+    
+    timeButtons.forEach((btn, index) => {
+      btn.addEventListener('click', () => {
+        if (timeStates[index]) {
+          btn.textContent = 'Start Time';
+          btn.classList.remove('end');
+          timeStates[index] = false;
+          showWarning(`Time برای ${btn.parentElement.querySelector('.time-player-name').textContent} متوقف شد`, 'success');
+        } else {
+          btn.textContent = 'End Time';
+          btn.classList.add('end');
+          timeStates[index] = true;
+          showWarning(`Time برای ${btn.parentElement.querySelector('.time-player-name').textContent} شروع شد`, 'success');
+        }
+      });
+    });
+    
+    submitTest.addEventListener('click', () => {
+      const playerName = testPlayerName.value.trim();
+      const link = testLink.value.trim();
+      
+      if (playerName === '' || link === '') {
+        showWarning('لطفاً تمام فیلدها را پر کنید!');
+        return;
+      }
+      
+      showWarning(`اطلاعات تست برای ${playerName} با موفقیت ثبت شد!`, 'success');
+      testPlayerName.value = '';
+      testLink.value = '';
+    });
+    
+    submitJabejayi.addEventListener('click', () => {
+      const time = jabejayiTime.value.trim();
+      
+      if (time === '') {
+        showWarning('لطفاً تایم جابجایی را وارد کنید!');
+        return;
+      }
+      
+      showWarning(`تایم جابجایی ${time} با موفقیت ثبت شد!`, 'success');
+      jabejayiTime.value = '';
+    });
+    
+    gkBtn.addEventListener('click', () => {
+      gkModal.classList.add('active');
+    });
+    
+    staffsBtn.addEventListener('click', () => {
+      staffsPanel.classList.add('active');
+    });
+    
+    newsBtn.addEventListener('click', () => {
+      newsPanel.classList.add('active');
+    });
+    
+    managementBtn.addEventListener('click', () => {
+      if (currentUser) {
+        managementModal.classList.add('active');
+      } else {
+        showWarning('لطفاً ابتدا وارد سیستم شوید!');
+      }
+    });
+    
+    loginBtn.addEventListener('click', () => {
+      if (currentUser) {
+        userPanel.classList.add('active');
+      } else {
+        loginModal.classList.add('active');
+      }
+    });
+    
+    logoutBtn.addEventListener('click', () => {
+      currentUser = null;
+      localStorage.removeItem('newsReporterLoggedInUser');
+     
+      headerRank.textContent = 'Rank: Member';
+      headerRank.className = 'rank-badge member';
+      welcomeText.textContent = 'خوش آمدید';
+      logoutBtn.style.display = 'none';
+     
+      userPanel.classList.remove('active');
+     
+      showWarning('شما با موفقیت خارج شدید.', 'success');
+    });
+    
+    closeGkModal.addEventListener('click', () => {
+      gkModal.classList.remove('active');
+      playerNameInput.value = '';
+      resultContainer.innerHTML = '';
+    });
+    
+    staffsBackBtn.addEventListener('click', () => {
+      staffsPanel.classList.remove('active');
+    });
+    
+    newsBackBtn.addEventListener('click', () => {
+      newsPanel.classList.remove('active');
+    });
+    
+    closeManagementModal.addEventListener('click', () => {
+      managementModal.classList.remove('active');
+      tokenInput.value = '';
+    });
+    
+    closeLoginModal.addEventListener('click', () => {
+      loginModal.classList.remove('active');
+      usernameInput.value = '';
+      passwordInput.value = '';
+    });
+    
+    backBtn.addEventListener('click', () => {
+      managementPanel.classList.remove('active');
+      topicSelectionPanel.classList.add('active');
+    });
+    
+    userBackBtn.addEventListener('click', () => {
+      userPanel.classList.remove('active');
+    });
+    
+    newsDetailsBackBtn.addEventListener('click', () => {
+      newsDetailsPanel.classList.remove('active');
+      newsPanel.classList.add('active');
+    });
+    
+    window.addEventListener('click', (e) => {
+      if (e.target === gkModal) {
+        gkModal.classList.remove('active');
+        playerNameInput.value = '';
+        resultContainer.innerHTML = '';
+      }
+      if (e.target === staffsPanel) {
+        staffsPanel.classList.remove('active');
+      }
+      if (e.target === newsPanel) {
+        newsPanel.classList.remove('active');
+      }
+      if (e.target === managementModal) {
+        managementModal.classList.remove('active');
+        tokenInput.value = '';
+      }
+      if (e.target === loginModal) {
+        loginModal.classList.remove('active');
+        usernameInput.value = '';
+        passwordInput.value = '';
+      }
+      if (e.target === managementPanel) {
+        managementPanel.classList.remove('active');
+        topicSelectionPanel.classList.add('active');
+      }
+      if (e.target === userPanel) {
+        userPanel.classList.remove('active');
+      }
+      if (e.target === newsDetailsPanel) {
+        newsDetailsPanel.classList.remove('active');
+        newsPanel.classList.add('active');
+      }
+      if (e.target === topicSelectionPanel) {
+        topicSelectionPanel.classList.remove('active');
+        managementModal.classList.add('active');
+      }
+      if (e.target === timePanel) {
+        timePanel.classList.remove('active');
+        topicSelectionPanel.classList.add('active');
+      }
+      if (e.target === testPanel) {
+        testPanel.classList.remove('active');
+        topicSelectionPanel.classList.add('active');
+      }
+      if (e.target === jabejayiPanel) {
+        jabejayiPanel.classList.remove('active');
+        topicSelectionPanel.classList.add('active');
+      }
+    });
+    
+    searchBtn.addEventListener('click', () => {
+      const name = playerNameInput.value.trim();
+      resultContainer.innerHTML = '';
+   
+      if (name === 'The_Soap' || name === 'SkyZero') {
+        const userData = users[name];
+        resultContainer.innerHTML = `
+          <div class="rank-item" style="background: rgba(40, 167, 69, 0.7);">
+            <div class="player-name">حقوق شما در فکشن</div>
+            <div class="player-weeks">1.000.000$</div>
+          </div>
+          <div class="rank-item" style="background: rgba(220, 53, 69, 0.7); margin-top: 10px;">
+            <div class="player-name">اسکرین‌شات‌های رد شده</div>
+            <div class="player-weeks">5 عدد</div>
+          </div>
+          <div class="rank-item" style="background: rgba(33, 150, 243, 0.7); margin-top: 10px;">
+            <div class="player-name">رنک شما</div>
+            <div class="player-weeks">${userData.displayRank}</div>
+          </div>
+        `;
+      } else if (name === '') {
+        showWarning('لطفاً نام را وارد کنید!');
+      } else {
+        showWarning('پلیر یافت نشد!');
+      }
+    });
+    
+    submitToken.addEventListener('click', () => {
+      const token = tokenInput.value.trim();
+   
+      if (token === 'ABCD1234QERT') {
+        managementModal.classList.remove('active');
+        topicSelectionPanel.classList.add('active');
+        tokenInput.value = '';
+      } else if (token === '') {
+        showWarning('لطفاً توکن را وارد کنید!');
+      } else {
+        showWarning('توکن وارد شده اشتباه است!');
+      }
+    });
+    
+    submitLogin.addEventListener('click', () => {
+      const user = usernameInput.value.trim();
+      const pass = passwordInput.value;
+      const remember = rememberMe.checked;
+   
+      if (users[user] && users[user].password === pass) {
+        if (remember) {
+          localStorage.setItem('newsReporterLoggedInUser', JSON.stringify({
+            username: user,
+            timestamp: Date.now()
+          }));
+        }
+       
+        loginUser(user, true);
+      } else if (user === '' || pass === '') {
+        showWarning('لطفاً اطلاعات ورود را کامل کنید!');
+      } else {
+        showWarning('نام کاربری یا رمز عبور اشتباه است!');
+      }
+    });
+    
+    submitSalary.addEventListener('click', () => {
+      const playerName = document.getElementById('playerNameInput').value.trim();
+      const salary = document.getElementById('playerSalary').value.trim();
+      const screenshots = document.getElementById('screenshotsCount').value.trim();
+      const rejected = document.getElementById('rejectedScreenshots').value.trim();
+     
+      if (playerName === '' || salary === '' || screenshots === '' || rejected === '') {
+        showWarning('لطفاً تمام فیلدها را پر کنید!');
+        return;
+      }
+     
+      showWarning(`حقوق ${playerName} با موفقیت ثبت شد!`, 'success');
+     
+      document.getElementById('playerNameInput').value = '';
+      document.getElementById('playerSalary').value = '';
+      document.getElementById('screenshotsCount').value = '';
+      document.getElementById('rejectedScreenshots').value = '';
+    });
+    
+    submitWarning.addEventListener('click', () => {
+      const playerName = document.getElementById('warningPlayerName').value.trim();
+      const reason = document.getElementById('warningReason').value.trim();
+      const count = document.getElementById('warningCount').value.trim();
+      const date = document.getElementById('warningDate').value;
+     
+      if (playerName === '' || reason === '' || count === '' || date === '') {
+        showWarning('لطفاً تمام فیلدها را پر کنید!');
+        return;
+      }
+     
+      showWarning(`اخطار برای ${playerName} با موفقیت ثبت شد!`, 'success');
+     
+      document.getElementById('warningPlayerName').value = '';
+      document.getElementById('warningReason').value = '';
+      document.getElementById('warningCount').value = '';
+      document.getElementById('warningDate').value = '';
+    });
+    
+    chatSendBtn.addEventListener('click', sendMessage);
+   
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+    
+    function sendMessage() {
+      const message = chatInput.value.trim();
+      if (message === '') return;
+     
+      const messageElement = document.createElement('div');
+      const currentUser = displayedUsername.textContent;
+     
+      if (users[currentUser] && users[currentUser].isOwner) {
+        messageElement.className = 'message owner';
+        messageElement.innerHTML = `<strong>${currentUser} (Owner):</strong> ${message}`;
+      } else {
+        messageElement.className = 'message';
+        messageElement.textContent = `${currentUser}: ${message}`;
+      }
+     
+      chatMessages.appendChild(messageElement);
+     
+      chatInput.value = '';
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+     
+      setTimeout(() => {
+        const responseElement = document.createElement('div');
+        responseElement.className = 'message system';
+        responseElement.textContent = 'مدیریت: پیام شما دریافت شد. به زودی پاسخ داده خواهد شد.';
+        chatMessages.appendChild(responseElement);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }, 1500);
+    }
+    
+    meetingSection.addEventListener('click', () => {
+      showNewsDetails('میتینگ‌ها', newsData.meeting);
+    });
+    
+    salarySection.addEventListener('click', () => {
+      showNewsDetails('حقوق', newsData.salary);
+    });
+    
+    membershipSection.addEventListener('click', () => {
+      showNewsDetails('عضویت', newsData.membership);
+    });
+    
+    function showNewsDetails(title, newsItems) {
+      newsDetailsTitle.textContent = title;
+      newsDetailsBody.innerHTML = '';
+     
+      newsItems.forEach(item => {
+        const newsItemElement = document.createElement('div');
+        newsItemElement.className = 'news-item';
+        newsItemElement.innerHTML = `
+          <div class="news-item-title">${item.title}</div>
+          <div class="news-item-date">${item.date}</div>
+          <div class="news-item-content">${item.content}</div>
+        `;
+        newsDetailsBody.appendChild(newsItemElement);
+      });
+     
+      newsPanel.classList.remove('active');
+      newsDetailsPanel.classList.add('active');
+    }
+    
+    function showWarning(msg, type = 'error') {
+      const warningBox = document.getElementById('warning');
+      const warningIcon = warningBox.querySelector('.warning-icon');
+      const warningText = warningBox.querySelector('span');
+   
+      warningText.textContent = msg;
+   
+      if (type === 'success') {
+        warningBox.style.background = 'rgba(40, 167, 69, 0.95)';
+        warningIcon.className = 'fas fa-check-circle warning-icon';
+      } else {
+        warningBox.style.background = 'rgba(255, 60, 60, 0.95)';
+        warningIcon.className = 'fas fa-exclamation-triangle warning-icon';
+      }
+   
+      warningBox.classList.add('show');
+   
+      setTimeout(() => {
+        warningBox.classList.remove('show');
+      }, 3000);
+    }
+    
+    playerNameInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') searchBtn.click();
+    });
+    
+    tokenInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') submitToken.click();
+    });
+    
+    usernameInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') submitLogin.click();
+    });
+    
+    passwordInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') submitLogin.click();
+    });
+  </script> 
+</body>
+</html>
